@@ -27,7 +27,7 @@ public class Server extends Thread{
 
         try {
             ActionServerSocket = new ServerSocket(ServerPort);
-            System.out.println("SERVER []: " + "-SERVER STARTED-");
+            System.out.println("-SERVER STARTED-");
 
             while (mainProgramLoop){
                 new ActionServerThread(ActionServerSocket.accept(),ThreadLocalRandom.current().nextInt(), ourSharedActionStateObject).start();

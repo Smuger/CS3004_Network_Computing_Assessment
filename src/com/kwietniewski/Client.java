@@ -17,6 +17,11 @@ public class Client extends Thread {
      * TODO: 5. carLeave() <- (server confirmed, car left) [Server] "Goodbye"
      */
     private String currentState = "";
+    private int uniqueID;
+
+    public Client(int uniqueID){
+        this.uniqueID = uniqueID;
+    }
 
     @Override
     public void run() {
@@ -25,7 +30,7 @@ public class Client extends Thread {
         BufferedReader in = null;
         int serverPort = 4545;
         String serverIP = "localhost";
-        String uniqueID = UUID.randomUUID().toString();
+        //String uniqueID = UUID.randomUUID().toString();
 
         try {
             carClientSocket = new Socket(serverIP, serverPort);
@@ -49,39 +54,42 @@ public class Client extends Thread {
         String fromServer;
         String fromUser;
 
-        System.out.println("CLIENT [" + uniqueID + "]: " + "CONNECTION ESTABLISHED");
+        //System.out.println("CLIENT [" + uniqueID + "]: " + "CONNECTION ESTABLISHED");
         try {
             // Park car
             Thread.sleep((long) (Math.random() * 200));
             out.println("arrived");
-            System.out.println("CLIENT [" + uniqueID + "]: " + "-ARRIVED-");
+            currentState = "approaching";
+            System.out.println("CLIENT ["+ uniqueID +"] [" + currentState + "] : " + "Hello server. I would like to park my car.");
 
             fromServer = in.readLine();
-            System.out.println("CLIENT [" + uniqueID + "]: " + "MESSAGE FROM SERVER []: " + fromServer);
+
             if (fromServer.equals("queued")){
                 currentState = "queued";
+                System.out.println("CLIENT ["+ uniqueID +"] [" + currentState + "] : " + "CAR PARK CURRENTLY FULL. PLACED IN THE QUEUE.");
             }
             if (fromServer.equals("parked")){
                 currentState = "parked";
+                System.out.println("CLIENT ["+ uniqueID +"] [" + currentState + "] : " + "YOUR CAR WAS PARKED SUCCESSFULLY.");
             }
 
             if (currentState.equals("queued")){
                 currentState = in.readLine();
+                if (currentState.equals("parked")) {
+                    System.out.println("CLIENT ["+ uniqueID +"] [" + currentState + "] : " + "YOUR CAR WAS PARKED SUCCESSFULLY.");
+                }
             }
 
             // Leave car park
             Thread.sleep((long) (Math.random() * 2000));
             out.println("leave");
-            System.out.println("CLIENT [" + uniqueID + "]: " + "-ARRIVED-");
-            if (in.readLine().equals("leave")){
+            System.out.println("CLIENT ["+ uniqueID +"] [" + currentState + "] : " + "Hello server. I would like to leave.");
+
+            fromServer = in.readLine();
+            if (fromServer.equals("leave")){
                 currentState = "leave";
-                System.out.println("CLIENT [" + uniqueID + "]: " + "MESSAGE FROM SERVER []: leave");
-                System.out.println("CLIENT [" + uniqueID + "]: " + "--CAR LEFT CAR PARK--");
+                System.out.println("CLIENT ["+ uniqueID +"] [" + currentState + "] : " + "CAR LEFT CAR PARK. GOODBYE");
             }
-
-            //
-
-
 
         } catch (InterruptedException | IOException e) {
             e.printStackTrace();

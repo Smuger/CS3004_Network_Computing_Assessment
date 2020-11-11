@@ -66,7 +66,7 @@ public class SharedActionState{
             myThreadNameBySocketOut.put(myThreadName, out);
         }
 
-        System.out.println("SERVER []: " + myThreadName + " : "+ theInput);
+        //System.out.println("SERVER []: " + myThreadName + " : "+ theInput);
 
         String theOutput = null;
         // Check what the client said
@@ -74,12 +74,12 @@ public class SharedActionState{
         if (theInput.equals("arrived")){
             if (carCurrentlyParked.size()==CARPARKSPACELIMIT){
                 carQueue.add(myThreadName);
-                System.out.println("SERVER []: " + myThreadName + " was put in a queue.");
+                //System.out.println("SERVER []: " + myThreadName + " was put in a queue.");
                 theOutput = "queued";
             }
             else {
                 carCurrentlyParked.add(myThreadName);
-                System.out.println("SERVER []: " + myThreadName + " just parked.");
+                //System.out.println("SERVER []: " + myThreadName + " just parked.");
                 theOutput = "parked";
             }
         }
@@ -96,14 +96,11 @@ public class SharedActionState{
                 PrintWriter outQueue = myThreadNameBySocketOut.get(carFromQueue);
                 outQueue.println("parked");
                 carCurrentlyParked.add(carFromQueue);
-                System.out.println("SERVER []: " + myThreadName + " moved from queue to park.");
-            }
-            else {
-                theOutput = "carParkEmpty";
+                System.out.println("SERVER []: MOVED FROM QUEUE TO CAR PARK.");
             }
         }
         else {
-            System.out.println("SERVER []: " + myThreadName + " SERVER CONFUSED. Server did not know what to do with your message. Please try again.");
+            //System.out.println("SERVER []: " + myThreadName + " SERVER CONFUSED. Server did not know what to do with your message. Please try again.");
             theOutput = "confused";
         }
 
@@ -111,7 +108,7 @@ public class SharedActionState{
         System.out.println("SERVER []: PARKED: " + carCurrentlyParked.size());
 
         //Return the output message to the ActionServer
-        System.out.println(theOutput);
+        //System.out.println(theOutput);
 
         return theOutput;
     }

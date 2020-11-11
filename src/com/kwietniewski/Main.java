@@ -19,10 +19,10 @@ public class Main {
     //TODO: 3. Car leaving the car reduce occupied space count.
     public static void main(String[] args) {
         new Server(4545,"ActionServer").start();
-        new Client().start();
-        new Client().start();
-        new Client().start();
-        new Client().start();
-        new Client().start();
+        new Client(1).start();
+        new Client(2).start();
+        new Client(3).start();
+        new Client(4).start();
+        new Client(5).start();
     }
 }

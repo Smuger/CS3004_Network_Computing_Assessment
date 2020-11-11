@@ -20,7 +20,7 @@ public class ActionServerThread extends Thread {
 
     public void run() {
         try {
-            System.out.println("SERVER []: SERVER ASSIGNED FOLLOWING ID TO THE NEW CLIENT: " + myActionServerThreadName);
+            //System.out.println("SERVER []: SERVER ASSIGNED FOLLOWING ID TO THE NEW CLIENT: " + myActionServerThreadName);
             PrintWriter out = new PrintWriter(actionSocket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(actionSocket.getInputStream()));
             String inputLine, outputLine;
@@ -28,7 +28,7 @@ public class ActionServerThread extends Thread {
             while ((inputLine = in.readLine()) != null) {
                 // Get a lock first
                 try {
-                    System.out.println("SERVER []: INPUT FROM: " + myActionServerThreadName + ": " + inputLine);
+                    //System.out.println("SERVER []: INPUT FROM: " + myActionServerThreadName + ": " + inputLine);
                     mySharedActionStateObject.acquireLock();
                     outputLine = mySharedActionStateObject.processInput(myActionServerThreadName, inputLine, out);
                     out.println(outputLine);
