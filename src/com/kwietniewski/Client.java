@@ -16,6 +16,7 @@ public class Client extends Thread {
      * TODO: 4. carLeave() -> (ask server for permission to leave) [Server] "Leaving car park"
      * TODO: 5. carLeave() <- (server confirmed, car left) [Server] "Goodbye"
      */
+    private String currentState = "";
 
     @Override
     public void run() {
@@ -50,10 +51,42 @@ public class Client extends Thread {
 
         System.out.println("CLIENT [" + uniqueID + "]: " + "CONNECTION ESTABLISHED");
         try {
+            // Park car
             Thread.sleep((long) (Math.random() * 200));
-        } catch (InterruptedException e) {
+            out.println("arrived");
+            System.out.println("CLIENT [" + uniqueID + "]: " + "-ARRIVED-");
+
+            fromServer = in.readLine();
+            System.out.println("CLIENT [" + uniqueID + "]: " + "MESSAGE FROM SERVER []: " + fromServer);
+            if (fromServer.equals("queued")){
+                currentState = "queued";
+            }
+            if (fromServer.equals("parked")){
+                currentState = "parked";
+            }
+
+            if (currentState.equals("queued")){
+                currentState = in.readLine();
+            }
+
+            // Leave car park
+            Thread.sleep((long) (Math.random() * 2000));
+            out.println("leave");
+            System.out.println("CLIENT [" + uniqueID + "]: " + "-ARRIVED-");
+            if (in.readLine().equals("leave")){
+                currentState = "leave";
+                System.out.println("CLIENT [" + uniqueID + "]: " + "MESSAGE FROM SERVER []: leave");
+                System.out.println("CLIENT [" + uniqueID + "]: " + "--CAR LEFT CAR PARK--");
+            }
+
+            //
+
+
+
+        } catch (InterruptedException | IOException e) {
             e.printStackTrace();
         }
+
         //while (true) {
         //    try {
         //        fromUser = stdIn.readLine();

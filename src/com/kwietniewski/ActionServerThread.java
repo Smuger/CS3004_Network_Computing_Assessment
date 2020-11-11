@@ -30,12 +30,12 @@ public class ActionServerThread extends Thread {
                 try {
                     System.out.println("SERVER []: INPUT FROM: " + myActionServerThreadName + ": " + inputLine);
                     mySharedActionStateObject.acquireLock();
-                    outputLine = mySharedActionStateObject.processInput(myActionServerThreadName, inputLine);
+                    outputLine = mySharedActionStateObject.processInput(myActionServerThreadName, inputLine, out);
                     out.println(outputLine);
                     mySharedActionStateObject.releaseLock();
                 }
                 catch(InterruptedException e) {
-                    System.err.println("Failed to get lock when reading:"+e);
+                    //System.err.println("Failed to get lock when reading:"+e);
                 }
             }
 

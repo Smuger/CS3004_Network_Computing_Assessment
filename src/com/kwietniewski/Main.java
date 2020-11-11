@@ -21,5 +21,8 @@ public class Main {
         new Server(4545,"ActionServer").start();
         new Client().start();
         new Client().start();
+        new Client().start();
+        new Client().start();
+        new Client().start();
     }
 }

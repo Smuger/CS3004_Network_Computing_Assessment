@@ -31,7 +31,7 @@ public class Server extends Thread{
 
             while (mainProgramLoop){
                 new ActionServerThread(ActionServerSocket.accept(),ThreadLocalRandom.current().nextInt(), ourSharedActionStateObject).start();
-                System.out.println("SERVER []: " + "-CLIENT CONNECTED-");
+                //System.out.println("SERVER []: " + "-CLIENT CONNECTED-");
             }
             ActionServerSocket.close();
         } catch (IOException e) {
